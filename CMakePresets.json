@@ -60,7 +60,8 @@
     "CC": "icc",
     "CXX": "icpc",
     "FC": "ifort",
-    "MPI_ROOT": "$env{I_MPI_ROOT}"
+    "MPI_ROOT": "$env{I_MPI_ROOT}",
+    "LAPACK_ROOT": "$env{MKLROOT}"
   }
 },
 {
