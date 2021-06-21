@@ -29,7 +29,7 @@ endif()
 
 find_package(LAPACK)
 find_package(BLAS)
-find_package(ZLIB)
+find_package(ZLIB REQUIRED)
 
 # --- find p4est or build if not found
 
