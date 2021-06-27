@@ -1,10 +1,5 @@
 {
   "version": 2,
-  "cmakeMinimumRequired": {
-    "major": 3,
-    "minor": 20,
-    "patch": 0
-},
 
 "configurePresets": [
 {
@@ -13,7 +8,8 @@
   "generator": "Ninja",
   "cacheVariables": {
     "CMAKE_BUILD_TYPE": "Release",
-    "CMAKE_CUDA_ARCHITECTURES": "72"
+    "CMAKE_CUDA_ARCHITECTURES": "72",
+    "CMAKE_INSTALL_PREFIX": "${sourceDir}/build/local"
   },
   "environment": {
     "CUDACXX": "/usr/local/cuda/bin/nvcc"
@@ -31,27 +27,12 @@
   "name": "mac", "inherits": "default",
   "displayName": "MacOS",
   "description": "MacOS: OpenMP not used",
-  "cacheVariables": {"openmp": false},
+  "cacheVariables": {
+    "openmp": false
+  },
   "environment": {
-    "CC": "gcc-11",
-    "CXX": "g++-11",
     "FC": "gfortran-11"
   }
-},
-{
-  "name": "makemac", "inherits": ["make", "mac"],
-  "displayName": "MacOS with Make",
-  "description": "MacOS: OpenMP not used, using Make"
-},
-{
-  "name": "make", "inherits": "default",
-  "displayName": "build with GNU Make",
-  "generator": "Unix Makefiles"
-},
-{
-  "name": "makewin", "inherits": "default",
-  "displayName": "build with GNU Make: Windows",
-  "generator": "MinGW Makefiles"
 },
 {
   "name": "intel", "inherits": "default",
@@ -74,11 +55,18 @@
 },
 {
   "name": "intelnext", "inherits": "intel",
-  "displayName": "Intel oneAPI LLVM",
+  "displayName": "Intel oneAPI LLVM: Linux/MacOS",
   "environment": {
     "CC": "icx",
-    "CXX": "icx",
+    "CXX": "icpx",
     "FC": "ifx"
+  }
+},
+{
+  "name": "intelnextwin", "inherits": "intelnext",
+  "displayName": "Intel oneAPI LLVM: Windows",
+  "environment": {
+    "CXX": "icx"
   }
 }
 ],

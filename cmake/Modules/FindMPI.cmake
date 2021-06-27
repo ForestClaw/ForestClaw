@@ -179,7 +179,7 @@ else()
   set(names mpi pmpi)
 endif()
 
-if(NOT MPI_FOUND)
+if(NOT MPI_C_FOUND)
   pkg_search_module(pc_mpi_c ompi-c)
 endif()
 
@@ -291,7 +291,7 @@ else()
     mpichcxx mpi pmpi)
 endif()
 
-if(NOT MPI_FOUND)
+if(NOT MPI_CXX_FOUND)
   pkg_search_module(pc_mpi_cxx ompi-cxx)
 endif()
 
@@ -405,7 +405,7 @@ else()
     )
 endif()
 
-if(NOT MPI_FOUND)
+if(NOT MPI_Fortran_FOUND)
   pkg_search_module(pc_mpi_f ompi-fort)
 endif()
 
