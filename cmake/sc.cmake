@@ -10,8 +10,12 @@ git_submodule("${PROJECT_SOURCE_DIR}/sc")
 # this keeps project scopes totally separate, which avoids
 # tricky to diagnose behaviors
 
-if(NOT DEFINED SC_ROOT)
-  set(SC_ROOT ${CMAKE_INSTALL_PREFIX})
+if(NOT SC_ROOT)
+  if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
+    set(SC_ROOT ${PROJECT_BINARY_DIR}/local CACHE PATH "default library root")
+  else()
+    set(SC_ROOT ${CMAKE_INSTALL_PREFIX})
+  endif()
 endif()
 
 if(BUILD_SHARED_LIBS)

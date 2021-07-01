@@ -10,8 +10,12 @@ git_submodule("${PROJECT_SOURCE_DIR}/p4est")
 # this keeps project scopes totally separate, which avoids
 # tricky to diagnose behaviors
 
-if(NOT DEFINED P4EST_ROOT)
-  set(P4EST_ROOT ${CMAKE_INSTALL_PREFIX})
+if(NOT P4EST_ROOT)
+  if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
+    set(P4EST_ROOT ${PROJECT_BINARY_DIR}/local CACHE PATH "default library root")
+  else()
+    set(P4EST_ROOT ${CMAKE_INSTALL_PREFIX})
+  endif()
 endif()
 
 if(BUILD_SHARED_LIBS)
