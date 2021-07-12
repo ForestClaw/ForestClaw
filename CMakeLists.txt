@@ -29,21 +29,31 @@ endif()
 
 find_package(LAPACK)
 find_package(BLAS)
-find_package(ZLIB)
+find_package(ZLIB REQUIRED)
 
-# --- p4est, sc
-
-set(CMAKE_FIND_PACKAGE_PREFER_CONFIG true)
+# --- find p4est or build if not found
 
 if(NOT sc_external)
-  find_package(SC HINTS ${THUNDEREGG_ROOT} ${P4EST_ROOT})
+  if(NOT SC_ROOT)
+    if(THUNDEREGG_ROOT)
+      set(SC_ROOT ${THUNDEREGG_ROOT})
+    elseif(P4EST_ROOT)
+      set(SC_ROOT P4EST_ROOT)
+    endif()
+  endif()
+  find_package(SC)
 endif()
 if(NOT TARGET SC::SC)
   include(cmake/sc.cmake)
 endif()
 
+# --- find libsc or build if not found
+
 if(NOT p4est_external)
-  find_package(P4EST HINTS ${THUNDEREGG_ROOT})
+  if(NOT P4EST_ROOT AND DEFINED THUNDEREGG_ROOT)
+    set(P4EST_ROOT ${THUNDEREGG_ROOT})
+  endif()
+  find_package(P4EST)
 endif()
 if(NOT TARGET P4EST::P4EST)
   include(cmake/p4est.cmake)
@@ -53,7 +63,10 @@ endif()
 
 if(thunderegg)
   if(NOT thunderegg_external)
-    find_package(ThunderEgg HINTS ${THUNDEREGG_ROOT})
+    if(NOT ThunderEgg_ROOT AND DEFINED THUNDEREGG_ROOT)
+      set(ThunderEgg_ROOT ${THUNDEREGG_ROOT})
+    endif()
+    find_package(ThunderEgg)
   endif()
   if(NOT TARGET ThunderEgg::ThunderEgg)
     include(cmake/ThunderEgg.cmake)
@@ -82,7 +95,7 @@ add_subdirectory(src)
 if(clawpatch)
 
   add_subdirectory(src/patches/clawpatch)
-  
+
 endif(clawpatch)
 
 # --- Clawpack 4.6
